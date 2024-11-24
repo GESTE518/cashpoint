@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<br><br><br>
+<header>
+    <h2>Enregistrement transaction journalier et transfert vers autre caspoint</h2>
+    <div style="display: flex;flex-wrap: wrap;gap: 15px;margin-bottom: 30px;background-color: #fff;padding: 20px;border-radius: 5px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+      <a class="btn btn-primary" href="{% url 'ajouter_transaction' %}">Ajouter une transaction journalier</a>
+      <a class="btn btn-primary" href="{% url 'transferer_fonds' %}">Transférer des fonds</a>
+    </div>
+</header>
+
+    <!-- Affichage des Transactions -->
+    <h2>Transactions</h2>
+    <div style="display: flex;flex-wrap: wrap;gap: 15px;margin-bottom: 30px;background-color: #fff;padding: 20px;border-radius: 5px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <table  class="table custom-table m-0"  style="border: 1px solid #2b3958;background: #ffffff;font-size: 1 rem;">
+        <thead>
+            <tr>
+                <th>Employeur</th>
+                <th>Opérateur</th>
+                <th>Montant Total</th>
+                <th>Bonus Total</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.employeur }}</td>
+                <td>{{ transaction.operateur }}</td>
+                <td>{{ transaction.montant_total }}</td>
+                <td>{{ transaction.bonus_total }}</td>
+                <td>{{ transaction.date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <!-- Affichage des Transferts -->
+     <h2>Transferts</h2>
+    <table class="table custom-table m-0"  style="border: 1px solid #2b3958;background: #ffffff;font-size: 1 rem;">
+        <thead>
+            <tr>
+                <th>Employeur Source</th>
+                <th>Employeur Cible</th>
+                <th>Opérateur</th>
+                <th>Montant</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transfert in transferts %}
+            <tr>
+                <td>{{ transfert.employeur_source }}</td>
+                <td>{{ transfert.employeur_cible }}</td>
+                <td>{{ transfert.operateur }}</td>
+                <td>{{ transfert.montant }}</td>
+                <td>{{ transfert.date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+    {% endblock %}

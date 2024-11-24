@@ -1,0 +1,17 @@
+/* Change la couleur de fond de l'en-tête du tableau */
+.model-transaction table thead th {
+    background-color: #4CAF50; /* Remplacez par la couleur que vous souhaitez */
+    color: white; /* Texte en blanc pour un meilleur contraste */
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Optionnel : styliser les bordures et ajuster le padding */
+.model-transaction table {
+    border-collapse: collapse;
+}
+
+.model-transaction table th, .model-transaction table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}

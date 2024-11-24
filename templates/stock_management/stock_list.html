@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock des Produits</title>
+</head>
+<body>
+    <h1>Stock des Produits</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Fournisseur</th>
+                <th>Opérateur</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produit in produits %}
+            <tr>
+                <td>{{ produit.nom }}</td>
+                <td>{{ produit.fournisseur.nom }}</td>
+                <td>{{ produit.operateur }}</td>
+                <td>{{ produit.stock }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

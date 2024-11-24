@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container" style="margin-top: 60px;">
+    <div >
+    	<div>
+    		<div  style="background:rgb(255, 255, 255);-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;border: 0;margin-bottom: 1rem;border-radius: 5px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    			<div class="card-body p-0">
+    				<div class="invoice-container" style="margin: 0 0 0 1rem;display: inline-block;font-size: 1rem;font-weight: 700;">
+    					<div class="invoice-header">
+    						
+    						<!-- Row start -->
+    						
+							<div class="table-responsive" style="display: flex;-ms-flex-align: center;flex-wrap:wrap;gap:15px;margin-bottom: 30px;background-color: #fff;padding: 20px;border-radius: 5px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+								<table class="table custom-table m-0">
+									<thead>
+										<tr>
+											<th>
+												<div class="invoice-details" style="margin: 1rem 0 0 0;padding: 1rem;line-height: 180%;background: #ffffffa1;"></div>
+												<address style="font-size: 0.8rem;margin: 0;">
+													{{ obj.customer.name }}<br>
+													 Madagascar
+												</address>
+											    </div> 
+										    </th>
+											<th>
+												<div class="invoice-details" style="display: flex;flex-wrap: wrap;gap: 15px;background-color: #fff;padding: 2px;border-radius: 5px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+													<div class="invoice-num" >
+														<div>{{obj.get_invoice_type_display}}</div>
+													</div>
+												</div>
+
+											</th>
+											<th>
+												<div>
+													<a href="{% url 'invoice-pdf' pk=obj.pk %}" class="btn btn-primary">
+														<i class="icon-download"></i> Download
+													</a>
+												</div>
+											</th>
+    
+								        </tr>
+								   </thead>
+								</table>
+							</div>	 											
+    						<!-- Row end -->
+    
+    					</div>
+    
+    					<div class="invoice-body" style="padding: 1rem 0 0 0;">
+    
+    						<!-- Row start -->
+    						<div>
+    							<div>
+    								<div class="table-responsive">
+    									<table class="table custom-table m-0"  style="border: 1px solid #2b3958;background: #ffffff;font-size: 1 rem;">
+    										<thead style="background: #8a99b5;">
+    											<tr>
+													<th style=" border: 0; color: #000;">N°</th>
+													<th style=" border: 0; color: #000;">Montant</th>
+													<th style=" border: 0; color: #000;">Frais</th>
+													<th style=" border: 0; color: #000;">Bonus Opérateur</th>
+													<th style=" border: 0; color: #000;">Bonus Personnalisé</th>
+													<th style=" border: 0; color: #000;">Bonus totale</th>
+    											</tr>
+    										</thead>
+    										<tbody>
+                                              {% for article in articles %} 
+                                              
+    											<tr>
+													<td>
+    													{{ article.id }}
+    													
+    												</td>
+                                                    <td>
+    													{{ article.montant }}
+    													
+    												</td>
+
+													<td>
+    													{{ article.frais }}
+    													
+    												</td>
+
+													<td>
+    													{{ article.bonus_operateur }}
+    													
+    												</td>
+
+													<td>
+    													{{ article.bonus_personalise }}
+    													
+    												</td>
+
+													<td>
+    													{{ article.bonus}}
+    													
+    												</td>
+    											</tr>
+                                               {% endfor %} 
+    											
+    										</tbody>
+    									</table>
+    								</div>
+    							</div>
+    						</div>
+    						<!-- Row end -->
+    
+    					</div>
+    
+    					<div class="invoice-footer" style="text-align: center;font-size: 0.7rem;margin: 5px 0 0 0;">
+    						misaotra anao tamin'ny fiarahamiasa {{ date }} .
+    					</div>
+    
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>
+
+{% endblock content %}

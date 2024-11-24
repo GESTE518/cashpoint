@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br><br><br><br>
+
+<h1 class="text-capitalize text-center mx-10 bg-dark text-white"> Enregistrer tarif</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="customer"> Customer </label>
+            <select name="customer" class="form-control" id="customer">
+                <option> Choose the customer ... </option>
+                {% for customer in customers %}
+                <option value="{{ customer.id }}">{{ forloop.counter }}-{{ customer.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="invoice">Categories</label>
+            <select name="invoice_type" class="form-control" id="invoice">
+                <option> Choisissez le type de tarif de transaction... </option>
+                <option value="D">Dépôt</option>
+                <option value="R">Retrait</option>
+                <option value="T">Transfert</option>
+                <option value="2">2Toi</option>
+                <option value="E">E-recharge</option>
+                <option value="S">spide</option>
+            </select>
+        </div>
+    </div>
+    
+    <div id="wrapper">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="montant-1"> Montant </label>
+                <input required name="montant" type="text" min="0" step="0.01" onchange="handleChangeSingleArticle(this.id)" class="form-control" id="montant-1">
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="frais-1"> Frais </label>
+                <input required name="frais" type="number" min="0" step="0.01" class="form-control" id="frais-1">
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="bonus_operateur-1"> Bonus Opérateur </label>
+                <input required name="bonus_operateur" type="number" min="0" step="0.01" class="form-control" id="bonus_operateur-1">
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="bonus_personalise-1"> Bonus Personnalisé </label>
+                <input required name="bonus_personalise" type="number" min="0" step="0.01" class="form-control" id="bonus_personalise-1">
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="bonus-a-1"> bonus </label>
+                <input required name="bonus-a" type="number" min="0" step="0.01" readonly class="form-control" id="total-a-1">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="total"> Total Général </label>
+            <input value="0" type="number" step="0.01" name="total" readonly class="form-control" id="total">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="comment"> Commentaires </label>
+            <textarea class="form-control" name="comment" id="comment" cols="30" rows="1"></textarea>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary"> Enregistrer </button>
+</form>
+
+<br><br>
+
+<div class="row">
+    <button id="btn-add" class="btn btn-outline-danger w-50 col-md-6"> Ajouter une nouvelle ligne </button>
+    <button id="btn-remove" class="btn btn-outline-warning w-50 col-md-6"> Supprimer la dernière ligne </button>
+</div>
+
+<br><br><br><br>
+
+<script type="text/javascript">
+    // click to add new line item 
+    $(document).on('click', '#btn-add', function(){
+        var number = $('#wrapper').children().length + 1;
+
+        let formAdd = `
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="article-${number}">#${number} Article </label>
+                    <input required name="article" type="text" class="form-control" id="article-${number}">
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="montant-${number}"> Montant </label>
+                    <input required name="montant" type="number" min="0" step="0.01" onchange="handleChangeSingleArticle(this.id)" class="form-control" id="montant-${number}">
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="frais-${number}"> Frais </label>
+                    <input required name="frais" type="number" min="0" step="0.01" class="form-control" id="frais-${number}">
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="bonus_operateur-${number}"> Bonus Opérateur </label>
+                    <input required name="bonus_operateur" type="number" min="0" step="0.01" class="form-control" id="bonus_operateur-${number}">
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="bonus_personalise-${number}"> Bonus Personnalisé </label>
+                    <input required name="bonus_personalise" type="number" min="0" step="0.01" class="form-control" id="bonus_personalise-${number}">
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="total-a-${number}"> Total </label>
+                    <input required name="total-a" type="number" min="0" step="0.01" readonly class="form-control" id="total-a-${number}">
+                </div>
+            </div>
+        `;   
+
+        $("#wrapper").append(formAdd);          
+    })
+    
+    // Remove last item line 
+    $(document).on('click', '#btn-remove', function(){
+        $("#wrapper").children().last().remove();
+        updateTotal();
+    })
+
+    // compute totals
+    function handleChangeSingleArticle(id){
+        let articleId = id.split('-')[1];
+
+        let montantId = `#montant-${articleId}`;
+        let fraisId = `#frais-${articleId}`;
+        let bonusOperateurId = `#bonus_operateur-${articleId}`;
+        let bonusPersonaliseId = `#bonus_personalise-${articleId}`;
+        let totalIdLine = `#total-a-${articleId}`;
+
+        let totalLine = (parseFloat($(montantId).val()) || 0) + (parseFloat($(fraisId).val()) || 0) + 
+                        (parseFloat($(bonusOperateurId).val()) || 0) + (parseFloat($(bonusPersonaliseId).val()) || 0);
+
+        $(totalIdLine).val(totalLine);
+        updateTotal();
+    }
+
+    // update the total amount
+    function updateTotal(){
+        let grandTotal = 0;
+        $('input[name="total-a"]').each(function(){
+            grandTotal += parseFloat($(this).val()) || 0;
+        });
+        $('#total').val(grandTotal);
+    }
+</script>
+{% endblock content %}

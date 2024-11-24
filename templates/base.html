@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NessCash</title>
+    <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="{% static 'css/main.css'%}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com"crossorigin />
+    <link rel="stylesheet" 
+    href="">
+</head>
+<body>
+    <header>
+    <nav  style="background: rgba(21, 22, 26, 0.205);">
+        <a href="#" class="nav-icon" 
+        aria-label="visit homepage"
+        aria-current="page">
+        <img src="{% static 'img/cash.png'%}" alt="">
+            <span>NessCash</span>
+        </a>
+
+        <div class="main-navlinks">
+            <button class="hamburger" type="button"
+            aria-label="Toggle navigation"
+            aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button> 
+         <div class="navlinks-container">
+          <a href="{% url 'home' %}" aria-current="page">Tarif</a>
+          <a href="{% url 'transactions' %}">Transaction</a>
+          <a href="{% url 'analyze_expenses' %}">Filtrge des donnèes</a>
+          <a href="{% url 'afficher_transactions_et_transferts' %}">resume</a>
+          <a href="#">contact</a>
+         </div>
+        </div>
+
+        <div class="nav-authentication">
+            <a href="#" class="sign-user"
+            aria-label="sign in page">
+            {{request.user.username}}
+        </a>
+        <div class="sign-btns">
+             <button type="button"> {{request.user.username}}</button>
+        </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="wrapper">
+      <br>
+      {% for message in messages %}
+      <div class="alert {{message.tags}} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message|safe }}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  
+  <!-- end header  -->
+  <div class="container">
+
+    {% block content %}
+
+    {% endblock content %}
+
+  </div>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

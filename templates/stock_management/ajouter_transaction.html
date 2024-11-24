@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<br><br><br>
+    <h1>Ajouter une Transaction</h1>
+    <form method="post" style="display: flex; flex-direction: column;margin-bottom: 30px;background-color: #fff;padding: 20px;border-radius: 5px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        {% csrf_token %}
+        <label for="operateur">Opérateur:</label>
+        <select name="operateur" id="operateur" required>
+            <option value="TELMA">Telma</option>
+            <option value="ORANGE">Orange</option>
+            <option value="AIRTEL">Airtel</option>
+        </select><br>
+        
+        <label for="montant">Montant:</label>
+        <input type="number" step="0.01" name="montant" id="montant" required><br>
+        
+        <label for="bonus">Bonus:</label>
+        <input type="number" step="0.01" name="bonus" id="bonus" value="0.00"><br>
+        
+        <button type="submit" class="badge text-white bg-success">Ajouter Transaction</button>
+    </form>
+{% endblock %}

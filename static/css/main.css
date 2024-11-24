@@ -1,0 +1,67 @@
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+.showPasswordToggle {
+  cursor: pointer;
+  transition: all;
+}
+
+.showPasswordToggle:hover {
+  transform: scale(1.2);
+}
+
+
+
+/* Styles pour la sidebar par défaut (grands écrans) */
+.sidebar {
+  position: fixed;
+  top: 56px; /* hauteur de la navbar */
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+/* Cacher la sidebar pour les petits écrans */
+.sidebar-hidden .sidebar {
+  transform: translateX(-250px); /* Masquer la sidebar */
+}
+
+/* Ajuster le contenu principal en fonction de la sidebar */
+.main-content {
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar-hidden .main-content {
+  margin-left: 0;
+}
+
+/* Pour les petits écrans (moins de 768px) */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    transform: translateX(-100%); /* La sidebar est masquée par défaut */
+  }
+
+  .sidebar-hidden .sidebar {
+    transform: translateX(0); /* Afficher la sidebar */
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+}

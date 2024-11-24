@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Soldes</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des Soldes</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Cashpoint</th>
+                <th>Produit</th>
+                <th>Opérateur</th>
+                <th>Montant</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for solde in soldes %}
+            <tr>
+                <td>{{ solde.cashpoint }}</td>
+                <td>
+                    {% if solde.produit %}
+                        {{ solde.produit.nom }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>{{ solde.operateur }}</td>
+                <td>{{ solde.montant }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
